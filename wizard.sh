@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Define basic variables
+BASE_PATH=$(cd `dirname $0`; pwd)
 BUILD_DEPENDS="binfmt-support coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools bsdtar libcap2-bin rsync xz-utils file git curl bc"
 
 check_environment() {
