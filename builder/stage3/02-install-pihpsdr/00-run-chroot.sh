@@ -3,7 +3,7 @@
 # Get piHPSDR setup wizard
 DIR_TMP=$(mktemp -d)
 curl --insecure -o ${DIR_TMP}/pihpsdr.tar https://raw.githubusercontent.com/g0orx/pihpsdr/master/release/pihpsdr.tar
-tar -xvf ${DIR_TMP}/pihpsdr/pihpsdr.tar -C ${DIR_TMP}
+tar -xvf ${DIR_TMP}/pihpsdr.tar -C ${DIR_TMP}
 
 # Install piHPSDR binary
 mv ${DIR_TMP}/pihpsdr/pihpsdr /usr/local/bin
