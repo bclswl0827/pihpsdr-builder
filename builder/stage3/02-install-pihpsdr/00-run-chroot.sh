@@ -25,7 +25,7 @@ ln -s libSoapySDR.so.0.8 libSoapySDR.so
 ldconfig
 
 # Create piHPSDR desktop shortcut
-mkdir -p /home/${FIRST_USER_NAME}/.pihpsdr
+mkdir -p /home/${FIRST_USER_NAME}/.pihpsdr /home/${FIRST_USER_NAME}/Desktop
 cat <<EOF > /home/${FIRST_USER_NAME}/.pihpsdr/start_pihpsdr.sh
 cd `pwd`
 /usr/local/bin/pihpsdr >log 2>&1
@@ -38,25 +38,22 @@ Version=1.0
 Type=Application
 Terminal=false
 Name[eb_GB]=piHPSDR
-Exec=/home/${USER}/.pihpsdr/start_pihpsdr.sh
-Icon=/home/${USER}/.pihpsdr/hpsdr_icon.png
+Exec=/home/${FIRST_USER_NAME}/.pihpsdr/start_pihpsdr.sh
+Icon=/home/${FIRST_USER_NAME}/.pihpsdr/hpsdr_icon.png
 Name=piHPSDR
 EOF
+if [ ! -d /home/${FIRST_USER_NAME}/.local ]; then
+  mkdir /home/${FIRST_USER_NAME}/.local
+fi
+if [ ! -d /home/${FIRST_USER_NAME}/.local/share ]; then
+  mkdir /home/${FIRST_USER_NAME}/.local/share
+fi
+if [ ! -d /home/${FIRST_USER_NAME}/.local/share/applications ]; then
+  mkdir /home/${FIRST_USER_NAME}/.local/share/applications
+fi
+cp /home/${FIRST_USER_NAME}/Desktop/pihpsdr.desktop /home/${FIRST_USER_NAME}/.local/share/applications
 chown -R ${FIRST_USER_NAME}:${FIRST_USER_NAME} /home/${FIRST_USER_NAME}
-chmod 755 -R /home/${FIRST_USER_NAME}/.pihpsdr/*.sh
-chmod 755 -R /home/${FIRST_USER_NAME}/Desktop/*.desktop
+chmod 755 -R /home/${FIRST_USER_NAME}/.pihpsdr/*.sh /home/${FIRST_USER_NAME}/Desktop
 rm -rf ${DIR_TMP}
 
-# Switch to default user
-su ${FIRST_USER_NAME}
-if [ ! -d ~/.local ]; then
-  mkdir ~/.local
-fi
-if [ ! -d ~/.local/share ]; then
-  mkdir ~/.local/share
-fi
-if [ ! -d ~/.local/share/applications ]; then
-  mkdir ~/.local/share/applications
-fi
-cp ~/Desktop/pihpsdr.desktop ~/.local/share/applications
-exit
+
