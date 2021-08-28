@@ -3,20 +3,20 @@
 # Get piHPSDR setup wizard
 DIR_TMP=$(mktemp -d)
 curl --insecure -o ${DIR_TMP}/pihpsdr.tar https://raw.githubusercontent.com/g0orx/pihpsdr/master/release/pihpsdr.tar
-tar -xf ${DIR_TMP}/pihpsdr.tar -C ${DIR_TMP}
+tar -xvf ${DIR_TMP}/pihpsdr/pihpsdr.tar -C ${DIR_TMP}
 
 # Install piHPSDR binary
-mv ${DIR_TMP}/pihpsdr /usr/local/bin
+mv ${DIR_TMP}/pihpsdr/pihpsdr /usr/local/bin
 chmod 755 /usr/local/bin/pihpsdr
 
 # Install piHPSDR udev rules
-mv ${DIR_TMP}/*.rules /etc/udev/rules.d
+mv ${DIR_TMP}/pihpsdr/*.rules /etc/udev/rules.d
 
 # Install piHPSDR libraries
-mv ${DIR_TMP}/libwdsp.so /usr/local/lib
-mv ${DIR_TMP}/libLimeSuite.so.19.04.1 /usr/local/lib
-mv ${DIR_TMP}/libSoapySDR.so.0.8.0 /usr/local/lib
-mv ${DIR_TMP}/SoapySDR /usr/local/lib
+mv ${DIR_TMP}/pihpsdr/libwdsp.so /usr/local/lib
+mv ${DIR_TMP}/pihpsdr/libLimeSuite.so.19.04.1 /usr/local/lib
+mv ${DIR_TMP}/pihpsdr/libSoapySDR.so.0.8.0 /usr/local/lib
+mv ${DIR_TMP}/pihpsdr/SoapySDR /usr/local/lib
 cd /usr/local/lib
 ln -s libLimeSuite.so.19.04.1 libLimeSuite.so.19.04-1
 ln -s libLimeSuite.so.19.04-1 libLimeSuite.so
@@ -30,7 +30,7 @@ cat <<EOF > /home/${FIRST_USER_NAME}/.pihpsdr/start_pihpsdr.sh
 cd `pwd`
 /usr/local/bin/pihpsdr >log 2>&1
 EOF
-mv ${DIR_TMP}/hpsdr_icon.png /home/${FIRST_USER_NAME}/.pihpsdr
+mv ${DIR_TMP}/pihpsdr/hpsdr_icon.png /home/${FIRST_USER_NAME}/.pihpsdr
 cat <<EOF > /home/${FIRST_USER_NAME}/Desktop/pihpsdr.desktop
 #!/usr/bin/env xdg-open
 [Desktop Entry]
