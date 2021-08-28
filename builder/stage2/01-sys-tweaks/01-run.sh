@@ -55,7 +55,6 @@ done
 for GRP in adm dialout cdrom audio users sudo video games plugdev input gpio spi i2c netdev; do
   adduser $FIRST_USER_NAME \$GRP
 done
-usermod -aG docker $FIRST_USER_NAME
 EOF
 
 on_chroot << EOF
