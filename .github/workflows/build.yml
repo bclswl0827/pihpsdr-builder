@@ -1,0 +1,30 @@
+name: Build piHPSDR Image
+
+on:
+  #schedule:
+  #- cron: 0 20 * * *
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Compile firmware
+      id: compile
+      run: |
+        sudo ./wizard.sh
+        echo "::set-output name=status::success"
+
+    - name: Upload image
+      uses: actions/upload-artifact@master
+      if: steps.compile.outputs.status == 'success'
+      with:
+        name: piHPSDR_IMG
+        path: builder/deploy
