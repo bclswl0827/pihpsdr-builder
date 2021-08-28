@@ -27,7 +27,7 @@ ldconfig
 # Create piHPSDR desktop shortcut
 mkdir -p /home/${FIRST_USER_NAME}/.pihpsdr /home/${FIRST_USER_NAME}/Desktop
 cat <<EOF > /home/${FIRST_USER_NAME}/.pihpsdr/start_pihpsdr.sh
-cd `pwd`
+cd /home/${FIRST_USER_NAME}/.pihpsdr
 /usr/local/bin/pihpsdr >log 2>&1
 EOF
 mv ${DIR_TMP}/pihpsdr/hpsdr_icon.png /home/${FIRST_USER_NAME}/.pihpsdr
