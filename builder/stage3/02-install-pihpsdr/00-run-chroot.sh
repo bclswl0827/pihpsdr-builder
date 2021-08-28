@@ -10,8 +10,7 @@ mv ${DIR_TMP}/pihpsdr /usr/local/bin
 chmod 755 /usr/local/bin/pihpsdr
 
 # Install piHPSDR udev rules
-mv ${DIR_TMP}/64-limesuite.rules /etc/udev/rules.d
-mv ${DIR_TMP}/90-ozy.rules /etc/udev/rules.d
+mv ${DIR_TMP}/*.rules /etc/udev/rules.d
 
 # Install piHPSDR libraries
 mv ${DIR_TMP}/libwdsp.so /usr/local/lib
