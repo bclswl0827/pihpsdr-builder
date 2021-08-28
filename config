@@ -1,0 +1,4 @@
+IMG_NAME='piHPSDR'
+RELEASE='buster'
+TARGET_HOSTNAME='pihpsdr'
+ENABLE_SSH='1'
