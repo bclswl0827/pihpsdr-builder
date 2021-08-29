@@ -39,11 +39,22 @@ fi
 if [ ! -d /home/${FIRST_USER_NAME}/.config/lxsession ]; then
   mkdir /home/${FIRST_USER_NAME}/.config/lxsession
 fi
-if [ ! -d /home/${FIRST_USER_NAME}/.config/lxsession/LXDE-pi ]; then
-  mkdir /home/${FIRST_USER_NAME}/.config/lxsession/LXDE-pi
+if [ ! -d /home/${FIRST_USER_NAME}/.config/lxsession/LXDE ]; then
+  mkdir /home/${FIRST_USER_NAME}/.config/lxsession/LXDE
 fi
-echo -e "@xset -dpms\n@xset s off\n@/home/${FIRST_USER_NAME}/.pihpsdr/start_pihpsdr.sh" >> /home/${FIRST_USER_NAME}/.config/lxsession/LXDE-pi/autostart
-update-mime-database /usr/share/mime
+cat <<EOF > /home/${FIRST_USER_NAME}/.config/lxsession/LXDE/autostart
+@lxpanel --profile LXDE
+@pcmanfm --desktop --profile LXDE
+@xset -dpms
+@xset s off
+@/home/${FIRST_USER_NAME}/.pihpsdr/start_pihpsdr.sh
+EOF
+
+# Auto login
+cat <<EOF > /etc/lightdm/lightdm.conf
+[SeatDefaults]
+autologin-user=${FIRST_USER_NAME}
+EOF
 
 # Change directory permissions
 chown -R ${FIRST_USER_NAME}:${FIRST_USER_NAME} /home/${FIRST_USER_NAME}

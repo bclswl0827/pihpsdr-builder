@@ -4,7 +4,6 @@ desktop-base
 policykit-1
 gvfs
 rfkill
-chromium-browser
 gldriver-test
 fonts-droid-fallback
 fonts-liberation2
