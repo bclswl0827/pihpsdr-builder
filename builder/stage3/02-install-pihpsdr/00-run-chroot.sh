@@ -24,36 +24,31 @@ ln -s libSoapySDR.so.0.8.0 libSoapySDR.so.0.8
 ln -s libSoapySDR.so.0.8 libSoapySDR.so
 ldconfig
 
-# Create piHPSDR desktop shortcut
-mkdir -p /home/${FIRST_USER_NAME}/.pihpsdr /home/${FIRST_USER_NAME}/Desktop
+# Create piHPSDR start script
+mkdir -p /home/${FIRST_USER_NAME}/.pihpsdr
 cat <<EOF > /home/${FIRST_USER_NAME}/.pihpsdr/start_pihpsdr.sh
 cd /home/${FIRST_USER_NAME}/.pihpsdr
-/usr/local/bin/pihpsdr >log 2>&1
+/usr/local/bin/pihpsdr >pihpsdr.log 2>&1
 EOF
 mv ${DIR_TMP}/pihpsdr/hpsdr_icon.png /home/${FIRST_USER_NAME}/.pihpsdr
-cat <<EOF > /home/${FIRST_USER_NAME}/Desktop/pihpsdr.desktop
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Version=1.0
-Type=Application
-Terminal=false
-Name[eb_GB]=piHPSDR
-Exec=/home/${FIRST_USER_NAME}/.pihpsdr/start_pihpsdr.sh
-Icon=/home/${FIRST_USER_NAME}/.pihpsdr/hpsdr_icon.png
-Name=piHPSDR
-EOF
-if [ ! -d /home/${FIRST_USER_NAME}/.local ]; then
-  mkdir /home/${FIRST_USER_NAME}/.local
+
+# Auto start piHPSDR
+if [ ! -d /home/${FIRST_USER_NAME}/.config ]; then
+  mkdir /home/${FIRST_USER_NAME}/.config
 fi
-if [ ! -d /home/${FIRST_USER_NAME}/.local/share ]; then
-  mkdir /home/${FIRST_USER_NAME}/.local/share
+if [ ! -d /home/${FIRST_USER_NAME}/.config/lxsession ]; then
+  mkdir /home/${FIRST_USER_NAME}/.config/lxsession
 fi
-if [ ! -d /home/${FIRST_USER_NAME}/.local/share/applications ]; then
-  mkdir /home/${FIRST_USER_NAME}/.local/share/applications
+if [ ! -d /home/${FIRST_USER_NAME}/.config/lxsession/LXDE-pi ]; then
+  mkdir /home/${FIRST_USER_NAME}/.config/lxsession/LXDE-pi
 fi
-cp /home/${FIRST_USER_NAME}/Desktop/pihpsdr.desktop /home/${FIRST_USER_NAME}/.local/share/applications
+echo -e "@xset -dpms\n@xset s off\n@/home/${FIRST_USER_NAME}/.pihpsdr/start_pihpsdr.sh" >> /home/${FIRST_USER_NAME}/.config/lxsession/LXDE-pi/autostart
+
+# Change directory permissions
 chown -R ${FIRST_USER_NAME}:${FIRST_USER_NAME} /home/${FIRST_USER_NAME}
-chmod 755 -R /home/${FIRST_USER_NAME}/.pihpsdr/*.sh /home/${FIRST_USER_NAME}/Desktop
+chmod 755 -R /home/${FIRST_USER_NAME}/.pihpsdr/*.sh
 rm -rf ${DIR_TMP}
 
-
+# Making the PNG loader built into the gdk-pixbuf shared library
+update-mime-database /usr/share/mime
+/usr/lib/arm-linux-gnueabihf/gdk-pixbuf/gdk-pixbuf-query-loaders --update-cache
