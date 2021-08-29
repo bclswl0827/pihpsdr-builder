@@ -43,12 +43,9 @@ if [ ! -d /home/${FIRST_USER_NAME}/.config/lxsession/LXDE-pi ]; then
   mkdir /home/${FIRST_USER_NAME}/.config/lxsession/LXDE-pi
 fi
 echo -e "@xset -dpms\n@xset s off\n@/home/${FIRST_USER_NAME}/.pihpsdr/start_pihpsdr.sh" >> /home/${FIRST_USER_NAME}/.config/lxsession/LXDE-pi/autostart
+update-mime-database /usr/share/mime
 
 # Change directory permissions
 chown -R ${FIRST_USER_NAME}:${FIRST_USER_NAME} /home/${FIRST_USER_NAME}
 chmod 755 -R /home/${FIRST_USER_NAME}/.pihpsdr/*.sh
 rm -rf ${DIR_TMP}
-
-# Making the PNG loader built into the gdk-pixbuf shared library
-update-mime-database /usr/share/mime
-/usr/lib/arm-linux-gnueabihf/gdk-pixbuf/gdk-pixbuf-query-loaders --update-cache
